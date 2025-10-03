@@ -1,26 +1,114 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base styles */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #000;
+  color: #fff;
+}
+
+/* Hero section */
+.hero {
+  background-image: url('/images/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 120px 20px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* Crimes section */
+.crimes {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.crimes h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.crimes p {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #aaa;
+}
+
+/* Convict cards */
+.convict-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  padding: 60px 20px;
+}
+
+.convict-card {
+  background-color: #111;
+  padding: 20px;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.convict-card:hover {
+  transform: scale(1.03);
+}
+
+.convict-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.convict-card p {
+  font-size: 0.95rem;
+  color: #bbb;
+}
+
+/* AR Experience */
+.ar-section {
+  padding: 80px 20px;
+  text-align: center;
+  background-color: #0a0a0a;
+}
+
+.ar-section h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.ar-section p {
+  color: #ccc;
+  margin-bottom: 30px;
+}
+
+.ar-section button {
+  background-color: #e50914;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.ar-section button:hover {
+  background-color: #c40812;
+}
+
+/* Footer */
+footer {
+  background-color: #111;
+  padding: 40px 20px;
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
 }
