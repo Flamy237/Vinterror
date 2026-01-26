@@ -30,8 +30,8 @@ export default function ARPage() {
 
         // Charger MindAR après A-Frame — essayer plusieurs CDN en repli
         const mindarUrls = [
-          'https://cdn.jsdelivr.net/npm/mind-ar@1.1.1/dist/mindar-image-aframe.prod.js',
-          'https://unpkg.com/mind-ar/dist/mindar-image-aframe.prod.js',
+          'https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js',
+          'https://unpkg.com/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js',
           'https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@master/dist/mindar-image-aframe.prod.js',
         ];
         let loaded = false;
