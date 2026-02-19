@@ -1,141 +1,212 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+/**
+ * PRÉREQUIS — une seule fois dans le terminal :
+ *   npm install three mind-ar
+ *   npm install --save-dev @types/three
+ */
+
+import { useRef, useState, useEffect } from 'react';
 
 export default function ARPage() {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mindarRef = useRef<any>(null);
+  const MindARThreeRef = useRef<any>(null);
+  const THREERef = useRef<any>(null);
+  const GLTFLoaderRef = useRef<any>(null);
+
+  const [started, setStarted] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [status, setStatus] = useState('Chargement MindAR...');
 
   useEffect(() => {
-    // Chargement dynamique des scripts MindAR et A-Frame
-    const loadScripts = async () => {
-      let aframeScript: HTMLScriptElement | null = null;
-      let mindarScript: HTMLScriptElement | null = null;
+    let cancelled = false;
+
+    const init = async () => {
       try {
-        if (typeof window === 'undefined' || typeof document === 'undefined') {
-          setError('Environment does not support window/document');
-          return;
-        }
+        setStatus('Chargement des modules...');
 
-        aframeScript = document.createElement('script');
-        aframeScript.src = 'https://aframe.io/releases/1.4.0/aframe.min.js';
-        aframeScript.async = true;
-        document.head.appendChild(aframeScript);
+        const [mindARModule, threeModule, gltfModule] = await Promise.all([
+          import('mind-ar/dist/mindar-image-three.prod.js'),
+          import('three'),
+          import('three/examples/jsm/loaders/GLTFLoader.js'),
+        ]);
 
-        // Attendre que A-Frame soit chargé
-        await new Promise<void>((resolve, reject) => {
-          aframeScript!.onload = () => resolve();
-          aframeScript!.onerror = () => reject(new Error('Failed to load A-Frame'));
-        });
+        if (cancelled) return;
 
-        // Charger MindAR après A-Frame — essayer plusieurs CDN en repli
-        const mindarUrls = [
-          'https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js',
-          'https://unpkg.com/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js',
-          'https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@master/dist/mindar-image-aframe.prod.js',
-        ];
-        let loaded = false;
-        for (const url of mindarUrls) {
-          try {
-            mindarScript = document.createElement('script');
-            mindarScript.src = url;
-            mindarScript.async = true;
-            document.head.appendChild(mindarScript);
+        MindARThreeRef.current = mindARModule.MindARThree;
+        THREERef.current = threeModule;
+        GLTFLoaderRef.current = gltfModule.GLTFLoader;
 
-            await new Promise<void>((resolve, reject) => {
-              mindarScript!.onload = () => resolve();
-              mindarScript!.onerror = () => reject(new Error(`Failed to load MindAR from ${url}`));
-            });
-
-            loaded = true;
-            break;
-          } catch (e) {
-            console.warn('MindAR CDN failed, trying next...', e);
-            if (mindarScript && mindarScript.parentNode) mindarScript.parentNode.removeChild(mindarScript);
-            mindarScript = null;
-          }
-        }
-        if (!loaded) throw new Error('Failed to load MindAR from all CDNs');
-
-        // Injecter le markup A-Frame dans le conteneur (après chargement des scripts)
-        if (containerRef.current) {
-          const html = `
-            <a-scene
-              mindar-image="imageTargetSrc: /models/card.mind; maxTrack: 1;"
-              color-space="sRGB"
-              renderer="antialias: true; physicallyCorrectLights: true"
-              vr-mode-ui="enabled: false"
-              embedded
-            >
-              <a-assets>
-                <a-asset-item id="wineModel" src="/models/scene.gltf"></a-asset-item>
-              </a-assets>
-
-              <a-camera-static></a-camera-static>
-
-              <a-entity mindar-image-target="targetIndex: 0">
-                <a-entity
-                  gltf-model="#wineModel"
-                  scale="0.08 0.08 0.08"
-                  position="0 0 0"
-                  rotation="0 0 0"
-                ></a-entity>
-              </a-entity>
-
-              <a-entity camera></a-entity>
-            </a-scene>
-          `;
-          containerRef.current.innerHTML = html;
-        }
+        setStatus('✅ Système prêt');
+        setReady(true);
       } catch (err: any) {
-        console.error('AR load error', err);
-        setError(err?.message || 'Unknown error while loading AR scripts');
+        console.error('Erreur init:', err);
+        setStatus('❌ ' + err.message);
       }
-
-      // cleanup function: remove appended scripts when unmounting
-      return () => {
-        try {
-          if (mindarScript && mindarScript.parentNode) mindarScript.parentNode.removeChild(mindarScript);
-          if (aframeScript && aframeScript.parentNode) aframeScript.parentNode.removeChild(aframeScript);
-          if (containerRef.current) containerRef.current.innerHTML = '';
-        } catch (e) {
-          // ignore cleanup errors
-        }
-      };
     };
 
-    const cleanupPromise = loadScripts();
+    init();
+    return () => { cancelled = true; };
+  }, []);
 
-    // If loadScripts returned a cleanup function, handle it on unmount
+  useEffect(() => {
     return () => {
-      // cleanupPromise may resolve to a function (we returned cleanup inside loadScripts)
-      cleanupPromise?.then((fn: any) => {
-        if (typeof fn === 'function') fn();
-      }).catch(() => {});
+      if (mindarRef.current) {
+        try { mindarRef.current.stop(); } catch (_) {}
+        mindarRef.current = null;
+      }
     };
   }, []);
 
+  const startExperience = async () => {
+    const MindARThree = MindARThreeRef.current;
+    const THREE = THREERef.current;
+    const GLTFLoader = GLTFLoaderRef.current;
+    if (!MindARThree || !THREE || !GLTFLoader) return;
+
+    setStarted(true);
+    setStatus('Initialisation caméra...');
+
+    try {
+      const mindarThree = new MindARThree({
+        container: containerRef.current!,
+        imageTargetSrc: '/models/capteur.mind',
+        maxTrack: 1,
+        uiScanning: 'yes',
+        uiLoading: 'yes',
+      });
+
+      const { renderer, scene, camera } = mindarThree;
+      mindarRef.current = mindarThree;
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+      const dirLight = new THREE.DirectionalLight(0xffffff, 1.5);
+      dirLight.position.set(0, 5, 5);
+      scene.add(dirLight);
+
+      const anchor = mindarThree.addAnchor(0);
+      const loader = new GLTFLoader();
+      setStatus('Chargement du modèle...');
+
+      loader.load(
+        '/models/personnage.glb',
+        (gltf: any) => {
+          console.log('✅ Modèle GLB chargé', gltf);
+          setStatus('Scannez le capteur 📷');
+
+          const model = gltf.scene;
+          model.scale.set(0.1, 0.1, 0.1); // ⚠️ Si invisible → essaie (1,1,1)
+          model.position.set(0, 0, 0);
+
+          model.traverse((child: any) => {
+            if (child.isMesh) {
+              const mats = Array.isArray(child.material) ? child.material : [child.material];
+              mats.forEach((m: any) => { m.side = THREE.DoubleSide; });
+              child.frustumCulled = false;
+            }
+          });
+
+          anchor.group.add(model);
+        },
+        (xhr: any) => {
+          if (xhr.total > 0) {
+            setStatus(`Modèle : ${Math.round((xhr.loaded / xhr.total) * 100)}%`);
+          }
+        },
+        (err: any) => {
+          console.error('❌ Erreur GLB:', err);
+          setStatus('❌ Erreur chargement modèle — vérifier /public/models/personnage.glb');
+        }
+      );
+
+      await mindarThree.start();
+      renderer.setAnimationLoop(() => renderer.render(scene, camera));
+
+    } catch (err) {
+      console.error('Erreur AR:', err);
+      setStatus('❌ ' + String(err));
+      setStarted(false);
+    }
+  };
+
+  const stopExperience = () => {
+    if (mindarRef.current) {
+      try {
+        mindarRef.current.renderer?.setAnimationLoop(null);
+        mindarRef.current.stop();
+      } catch (_) {}
+      mindarRef.current = null;
+    }
+    setStarted(false);
+    setStatus('✅ Système prêt');
+  };
+
   return (
-    <div style={{ width: '100%', height: '100vh', margin: 0, padding: 0 }}>
+    <div style={{ width: '100vw', height: '100vh', background: '#000', overflow: 'hidden' }}>
+
+      {!started && (
+        <div style={{
+          position: 'absolute', zIndex: 10, inset: 0,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          color: 'white', background: 'black', textAlign: 'center', padding: '20px',
+        }}>
+          <h1 style={{ letterSpacing: '4px', marginBottom: '10px', fontSize: '24px' }}>
+            VINTERROR AR
+          </h1>
+          <p style={{ opacity: 0.7, marginBottom: '30px', fontSize: '14px' }}>
+            {status}
+          </p>
+          {ready && (
+            <button
+              onClick={startExperience}
+              style={{
+                padding: '15px 40px', background: 'red', color: 'white',
+                border: 'none', cursor: 'pointer', fontWeight: 'bold',
+                fontSize: '16px', letterSpacing: '2px', borderRadius: '4px',
+              }}
+            >
+              ACTIVER LA CAMÉRA
+            </button>
+          )}
+        </div>
+      )}
+
+      {started && (
+        <div style={{
+          position: 'absolute', zIndex: 20, top: '20px', left: 0, right: 0,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px',
+        }}>
+          <div style={{
+            background: 'rgba(0,0,0,0.6)', color: 'white',
+            padding: '6px 14px', borderRadius: '20px', fontSize: '13px',
+          }}>
+            {status}
+          </div>
+          <button
+            onClick={stopExperience}
+            style={{
+              padding: '8px 20px', background: 'rgba(200,0,0,0.85)',
+              color: 'white', border: 'none', cursor: 'pointer',
+              borderRadius: '4px', fontSize: '13px', fontWeight: 'bold',
+            }}
+          >
+            ✕ STOP
+          </button>
+        </div>
+      )}
+
       <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
 
-      {/* Contrôles UI */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '20px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          color: 'white',
-          padding: '10px 20px',
-          borderRadius: '5px',
-          fontSize: '14px',
-          zIndex: 100,
-        }}
-      >
-        {error ? `Erreur AR: ${error}` : '📷 Pointez votre caméra sur le marqueur pour voir la bouteille'}
-      </div>
+      <style jsx global>{`
+        video, canvas {
+          position: absolute !important;
+          top: 0; left: 0;
+          width: 100vw !important;
+          height: 100vh !important;
+          object-fit: cover !important;
+        }
+      `}</style>
     </div>
   );
 }
