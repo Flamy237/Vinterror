@@ -2,7 +2,7 @@
 const nextConfig = {
   webpack: (config, { isServer }) => {
     if (!isServer) {
-      // ✅ Webpack classique : dit au bundler d'ignorer 'fs' côté browser
+      // ✅ Webpack classique : oblige le bundler a ignorer 'fs' côté client
       // MindAR l'utilise uniquement dans un contexte Node.js jamais atteint en browser
       config.resolve.fallback = {
         ...config.resolve.fallback,
