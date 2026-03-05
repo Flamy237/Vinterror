@@ -1,0 +1,191 @@
+.gridscan {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #222222e3;
+}
+
+.gridscan__preview {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 220px;
+  height: 132px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  background: #000;
+  color: #fff;
+  font:
+    12px/1.2 system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    sans-serif;
+  pointer-events: none;
+}
+
+.gridscan__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+}
+
+.gridscan__badge {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  overflow: hidden;
+  padding: 2px 6px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+}
+
+
+:root {
+  --cam-green: #007a5e;
+  --cam-red: #ce1126;
+  --cam-gold: #f8bc23; /* Ta couleur scanColor actuelle */
+  --tech-cyan: #00f3ff;
+  --font-serif: 'Playfair Display', serif; /* À importer ou remplacer par une Serif système */
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+.portal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.6) 100%);
+  pointer-events: none; /* Laisse passer les clics vers le fond si besoin, sauf sur le bouton */
+}
+
+.portal-content {
+  text-align: center;
+  max-width: 800px;
+  padding: 40px;
+  pointer-events: auto;
+  color: white;
+}
+
+.portal-tagline {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--cam-gold);
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px rgba(248, 188, 35, 0.5);
+}
+
+.portal-title {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+
+.highlight {
+  color: white;
+  font-style: italic;
+  position: relative;
+  display: inline-block;
+}
+
+.highlight::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cam-green), var(--cam-red), var(--cam-gold));
+}
+
+.portal-description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  opacity: 0.8;
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.6;
+}
+
+/* --- BOUTON STYLISÉ --- */
+.portal-button {
+  position: relative;
+  padding: 18px 40px;
+  background: transparent;
+  border: 1px solid var(--cam-gold);
+  color: var(--cam-gold);
+  font-family: var(--font-mono);
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  letter-spacing: 2px;
+}
+
+.portal-button:hover {
+  background: var(--cam-gold);
+  color: black;
+  box-shadow: 0 0 30px rgba(248, 188, 35, 0.4);
+}
+
+.button-glitch {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: 0.5s;
+}
+
+.portal-button:hover .button-glitch {
+  left: 100%;
+}
+
+/* --- DÉCO TECH --- */
+.tech-deco {
+  margin-top: 50px;
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.scanner-line {
+  position: absolute;
+  top: -20px;
+  width: 100px;
+  height: 1px;
+  background: var(--cam-red);
+  box-shadow: 0 0 8px var(--cam-red);
+  animation: scan 3s infinite ease-in-out;
+}
+
+@keyframes scan {
+  0%, 100% { transform: translateX(-50px); opacity: 0; }
+  50% { transform: translateX(50px); opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .portal-title { font-size: 2rem; }
+  .portal-content { padding: 20px; }
+}

@@ -123,7 +123,7 @@ export default function NosHerosPage() {
                 onMouseLeave={() => setSelectedHero(null)}>
               
                 <div className="monument-image-container">
-                  {/* Image placeholder - remplacer par vos images */}
+                  {/* Image placeholder -a remplacer par nos images plus tard*/}
                   <div className="monument-image">
                     <img src={monument.image}></img>
                     <div className="image-placeholder">

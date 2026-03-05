@@ -4,7 +4,7 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-// Création d'une texture de point rond
+// Création de la  texture de point rond
 const createCircleTexture = () => {
   const canvas = document.createElement('canvas');
   const size = 64;
@@ -106,7 +106,7 @@ const NetworkBackground = () => {
       const positions = geometry.attributes.position.array as Float32Array;
       
       for (let i = 0; i < points.length; i++) {
-        // Mettre à jour la position avec la vélocité
+        // Mise à jour de la position avec la vélocité
         points[i].add(velocities[i]);
 
         // Rebondir sur les bords
@@ -193,7 +193,7 @@ const ArHeroSection = () => {
         {/* Colonne Droite : Lecteur Vidéo/Instruction */}
         <div className="ar-hero-media">
             
-          {/* Conteneur pour simuler le lecteur vidéo */}
+          {/* Conteneur permettant de simuler le lecteur vidéo */}
           <div className="video-player">
               {/* L'image de fond qui montre le téléphone scannant une bouteille */}
               

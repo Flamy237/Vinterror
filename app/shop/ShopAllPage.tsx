@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from 'react';
-// Simuler des données de vin pour l'affichage
+// Simulation des données de vin pour l'affichage en attendant la bd
 import { sampleWines } from './sampleWinesData'; 
 
 interface Wine {
@@ -15,7 +15,7 @@ interface Wine {
     isSoldOut?: boolean;
 }
 
-// Composant pour l'affichage d'une seule carte de vin
+
 // Composant pour l'affichage d'une seule carte de vin
 const WineCard = ({ wine }: { wine: Wine }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -33,7 +33,7 @@ const WineCard = ({ wine }: { wine: Wine }) => {
             </div>
             <p className="wine-price">{wine.price.toFixed(2)} FCFA</p>
 
-            {/* NOUVEL OVERLAY DE SURVOL */}
+            {/* OVERLAY DE SURVOL */}
             <div className={`wine-overlay ${isHovered ? 'is-hovered' : ''}`}>
                 <div className="overlay-content">
                     <h3 className="overlay-name">{wine.name}</h3>
@@ -135,7 +135,7 @@ const ShopAllPage = () => {
             {/* Colonne Droite: Carte "Infamous Insider" */}
             <aside className="insider-promo-sidebar">
                         <div className="insider-box">
-                            {/* Image de fond (utilisez une image appropriée) */}
+                            {/* Image de fond (a remplacer par notre model 3D) */}
                             <img src="/images/insider-bg.jpg" alt="Devenir un Partenaire VinTerror" className="insider-bg-image" />                            <div className="insider-content">
                                 <h3 className="insider-title">DEVENEZ UN<br/>DE NOS PARTENAIRES</h3>
                                 <p className="insider-text">

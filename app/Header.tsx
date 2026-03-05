@@ -60,7 +60,7 @@ const Header = () => {
 
         { name: 'NOS MAGASINS', href: '/store-locator' },
         { name: 'NOS HEROS', href: '/hero' },
-        // 'A PROPOS' est traité séparément comme Dropdown
+    
     ];
 
     // Définition des liens pour le menu déroulant "A PROPOS" 
@@ -95,7 +95,7 @@ const Header = () => {
                 {/* Liens de navigation centraux - visible sur desktop */}
                 <nav className="nav-links desktop-only">
 
-                    {/* 🛑 MEGA MENU 'LES VINS' 🛑 */}
+                    {/* ====== MEGA MENU 'LES VINS' ======== */}
                     <div
                         className="mega-menu-container"
                         onMouseEnter={() => setIsWineMegaMenuOpen(true)}
@@ -132,7 +132,7 @@ const Header = () => {
                                     ))}
                                 </div>
 
-                                {/* Colonne Droite: Carte Promo (Image E14A63.png) */}
+                                {/* Colonne Droite: Carte Promo */}
                                 <div className="mega-menu-promo">
                                     <div className="promo-box">
 
@@ -154,7 +154,7 @@ const Header = () => {
                             </div>
                         </div>
                     </div>
-                    {/* 🛑 FIN MEGA MENU 🛑 */}
+                    {/* ====== FIN MEGA MENU ===== */}
 
                     {/* Liens statiques */}
                     {navLinks.map((link) => (

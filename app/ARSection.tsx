@@ -36,7 +36,7 @@ const ARSection = () => {
           </p>
           
           {/* Bouton CTA */}
-          <a href="/experience" className="ar-button">
+          <a href="/ar" className="ar-button">
             COMMENCER MAINTENANT
           </a>
           

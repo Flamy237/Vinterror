@@ -24,7 +24,7 @@ const Footer = () => {
           {/* Groupe 1 : The Wines */}
           <div className="footer-link-group">
             <h4 className="group-title">Les VINS</h4>
-            <a href="#" className="footer-link">Tous les vins</a>
+            <a href="/shop" className="footer-link">Tous les vins</a>
             <a href="#" className="footer-link">Les classiques</a>
             <a href="#" className="footer-link">Disponibles en AR</a>
           </div>
@@ -32,9 +32,9 @@ const Footer = () => {
           {/* Groupe 2 : About */}
           <div className="footer-link-group">
             <h4 className="group-title">A Propos</h4>
-            <a href="#" className="footer-link">Vinterror</a>
+            <a href="/about/crimes" className="footer-link">Vinterror</a>
             <a href="#" className="footer-link">The Crew</a>
-            <a href="#" className="footer-link">AR Experience</a>
+            <a href="/about/ar-experience" className="footer-link">AR Experience</a>
           </div>
 
           {/* Groupe 3 : Support */}
