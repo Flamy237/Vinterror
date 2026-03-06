@@ -7,8 +7,9 @@
   },
   "overrides": {
     "canvas":{
+      "canvas": "npm:empty-npm-package@1.0.0",
       "optional" : true
-    }
+    } 
   },
   "scripts": {
     "postinstall": "node scripts/patch-mindar.js",
