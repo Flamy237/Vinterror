@@ -6,7 +6,9 @@
     "node": "20.x"
   },
   "overrides": {
-    "canvas": "next/dist/compiled/jest-worker/node_modules/mkdirp"
+    "canvas":{
+      "optional" : true
+    }
   },
   "scripts": {
     "postinstall": "node scripts/patch-mindar.js",
@@ -16,6 +18,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.9",
+    "@heroicons/react": "^2.2.0",
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.3.0",
     "@tailwindcss/postcss": "^4.1.13",
@@ -30,6 +34,8 @@
     "postprocessing": "^6.38.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-hook-form": "^7.71.2",
+    "react-hot-toast": "^2.6.0",
     "three": "^0.160.1",
     "zustand": "^5.0.8"
   },
@@ -43,5 +49,8 @@
     "eslint-config-next": "15.5.3",
     "tailwindcss": "^4.1.13",
     "typescript": "^5"
-  }
+  },
+  "optionalDependencies": {
+  "canvas": "*"
+}
 }
