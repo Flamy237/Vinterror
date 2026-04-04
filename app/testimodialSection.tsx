@@ -11,16 +11,16 @@ const SCROLL_AMOUNT = 300;
 const sliderItems = [
   // L'ordre est important pour l'effet visuel : Avis/Bouteille/Avis/Bouteille...
   { type: 'review', quote: "BOLD, BALANCED", sub: "This is my favorite wine. Perfectly balanced", author: "- KRISTIE M.", wine: "The Warden Red Blend", rating: 4 },
-  { type: 'bottle', img: '/images/warden-bottle.png', alt: 'The Warden Red Blend Bottle' },
+  { type: 'bottle', img: '/assets/images/bouteille-vin.png', alt: 'The Warden Red Blend Bottle' },
   
   { type: 'review', quote: "BEST VALUE!", sub: "Great flavour for the price. Always a favourite at parties.", author: "- MARK R.", wine: "Red Blend", rating: 5 },
-  { type: 'bottle', img: '/images/prisoner-bottle.png', alt: 'The Prisoner Golden Bottle' },
+  { type: 'bottle', img: '/assets/images/bouteille-vin.png', alt: 'The Prisoner Golden Bottle' },
   
   { type: 'review', quote: "IS THAT SNOOP?", sub: "When I saw the label, I knew I had to buy it. My new go to.", author: "- TARA S.", wine: "Snoop Cali Red", rating: 5 },
-  { type: 'bottle', img: '/images/snoop-bottle.png', alt: 'Snoop Dogg Cali Bottle' },
+  { type: 'bottle', img: '/assets/images/bouteille-vin.png', alt: 'Snoop Dogg Cali Bottle' },
 
   { type: 'review', quote: "PERFECT GIFT", sub: "I bought this for a friend and they loved the unique packaging.", author: "- JANE D.", wine: "Universal Monsters", rating: 4 },
-  { type: 'bottle', img: '/images/frankenstien-bottle.png', alt: 'Frankenstien Wine' },
+  { type: 'bottle', img: '/assets/images/bouteille-vin.png', alt: 'Frankenstien Wine' },
 ];
 
 // Fonction utilitaire des etoiles
