@@ -24,6 +24,7 @@
     "aframe": "^1.7.1",
     "autoprefixer": "^10.4.21",
     "chart.js": "^4.5.1",
+    "encoding": "^0.1.13",
     "face-api.js": "^0.22.2",
     "framer-motion": "^12.34.5",
     "mind-ar": "^1.2.5",
