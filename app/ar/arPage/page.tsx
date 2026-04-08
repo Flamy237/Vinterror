@@ -179,7 +179,7 @@ export default function ARPage() {
     try {
       const mindarThree = new MindARThree({
         container: containerRef.current!,
-        imageTargetSrc: '/models/capteur.mind',
+        imageTargetSrc: '/models/targets.mind',
         maxTrack: 1,
         uiScanning: 'yes',
         uiLoading: 'yes',

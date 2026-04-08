@@ -1,7 +1,17 @@
+'use client';
+
+import { useState } from 'react';
 import Header from '../../../app/Header';
 import Footer from '../../../app/Footer';
 import '../../../app/globals.css';
 export default function VinTerrorPage() {
+    const [expandedBox, setExpandedBox] = useState<'mission' | 'vision' | null>(null);
+    const [showFullMotivation, setShowFullMotivation] = useState(false);
+
+    const toggleBox = (box: 'mission' | 'vision') => {
+        setExpandedBox((current) => (current === box ? null : box));
+    };
+
     return (
         <>
             <Header />
@@ -28,13 +38,33 @@ export default function VinTerrorPage() {
                             <div className="mission">
                                 <div className="mission-icon">🍷</div>
                                 <h3>Notre Mission</h3>
-                                <p>Révolutionner la découverte des vins camerounais en alliant l'authenticité des terroirs à l'innovation technologique. Nous connectons les amateurs de vin aux richesses viticoles locales à travers des expériences de réalité augmentée uniques.</p>
+                                <div className={`box-description ${expandedBox === 'mission' ? 'expanded-description' : 'collapsed-description'}`}>
+                                    <p>Révolutionner la découverte des vins camerounais en alliant l'authenticité des terroirs à l'innovation technologique. Nous connectons les amateurs de vin aux richesses viticoles locales à travers des expériences de réalité augmentée uniques.</p>
+                                </div>
+                                <button
+                                    type="button"
+                                    className="text-toggle-button icon-toggle"
+                                    aria-label={expandedBox === 'mission' ? 'Réduire la mission' : 'Afficher plus de la mission'}
+                                    onClick={() => toggleBox('mission')}
+                                >
+                                    <i className={`fas ${expandedBox === 'mission' ? 'fa-minus' : 'fa-plus'}`} aria-hidden="true"></i>
+                                </button>
                             </div>
 
                             <div className="vision">
                                 <div className="vision-icon">👁</div>
                                 <h3>Notre Vision</h3>
-                                <p>Devenir la référence incontournable pour la promotion et la valorisation des vins africains, en créant un pont entre tradition et modernité qui célèbre le patrimoine œnologique du Cameroun et au-delà.</p>
+                                <div className={`box-description ${expandedBox === 'vision' ? 'expanded-description' : 'collapsed-description'}`}>
+                                    <p>Devenir la référence incontournable pour la promotion et la valorisation des vins africains, en créant un pont entre tradition et modernité qui célèbre le patrimoine œnologique du Cameroun et au-delà.</p>
+                                </div>
+                                <button
+                                    type="button"
+                                    className="text-toggle-button icon-toggle"
+                                    aria-label={expandedBox === 'vision' ? 'Réduire la vision' : 'Afficher plus de la vision'}
+                                    onClick={() => toggleBox('vision')}
+                                >
+                                    <i className={`fas ${expandedBox === 'vision' ? 'fa-minus' : 'fa-plus'}`} aria-hidden="true"></i>
+                                </button>
                             </div>
                         </div>
 
@@ -42,13 +72,21 @@ export default function VinTerrorPage() {
                             <h2>Notre Motivation</h2>
                         </div>
 
-                        <div className='Histoire' >
+                        <div className={`Histoire motivation-text ${showFullMotivation ? 'expanded' : 'collapsed'}`}>
                             <p>Inspirés par l'héritage de résistance et de fierté nationale incarné par des figures comme Ruben Um Nyobè et Ernest Ouandié, VinTerror<sup>AR</sup> est né d'une conviction simple : les trésors œnologiques du Cameroun méritent d'être célébrés avec la même passion que celle qui a animé ces héros nationaux.</p>
 
                             <p>Notre aventure a commencé en 2025, lorsque nous fondateur, passionné à la fois de technologie et de vin, avons constaté le décalage entre la qualité exceptionnelle des vins locaux et leur visibilité limitée. En associant réalité augmentée et promotion des vins camerounais, nous créons une expérience immersive qui raconte l'histoire de chaque bouteille, des cépages aux vignerons.</p>
 
                             <p>Aujourd'hui, VinTerror<sup>AR</sup> continue d'écrire son histoire en redéfinissant la manière dont nous découvrons, apprécions et partageons le vin camerounais, en faisant de chaque dégustation un hommage à notre terroir et à notre patrimoine.</p>
                         </div>
+                        <button
+                            type="button"
+                            className="text-toggle-button icon-toggle motivation-toggle"
+                            aria-label={showFullMotivation ? 'Réduire le texte' : 'Afficher plus de texte'}
+                            onClick={() => setShowFullMotivation((value) => !value)}
+                        >
+                            <i className={`fas ${showFullMotivation ? 'fa-minus' : 'fa-plus'}`} aria-hidden="true"></i>
+                        </button>
                     </div>
                 </section>
 

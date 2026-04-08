@@ -1,12 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import '../../app/globals.css';
 import Header from '../../app/Header';
 import Footer from '../../app/Footer';
 export default function NosHerosPage() {
-  const [selectedHero, setSelectedHero] = useState<number | null >(null);
+  const [expandedHeroId, setExpandedHeroId] = useState<number | null>(null);
 
   const monuments = [
     {
@@ -118,9 +117,7 @@ export default function NosHerosPage() {
             {monuments.map((monument) => (
               <div 
                 key={monument.id} 
-                className="monument-card"
-                onMouseEnter={() => setSelectedHero(monument.id)}
-                onMouseLeave={() => setSelectedHero(null)}>
+                className="monument-card">
               
                 <div className="monument-image-container">
                   {/* Image placeholder -a remplacer par nos images plus tard*/}
@@ -136,7 +133,17 @@ export default function NosHerosPage() {
                 
                 <div className="monument-content">
                   <h3>{monument.title}</h3>
-                  <p>{monument.description}</p>
+                  <div className={`monument-description ${expandedHeroId === monument.id ? 'expanded-description' : 'collapsed-description'}`}>
+                    <p>{monument.description}</p>
+                  </div>
+                  <button
+                    type="button"
+                    className="text-toggle-button icon-toggle"
+                    aria-label={expandedHeroId === monument.id ? 'Réduire la description' : 'Voir plus de description'}
+                    onClick={() => setExpandedHeroId((current) => (current === monument.id ? null : monument.id))}
+                  >
+                    <i className={`fas ${expandedHeroId === monument.id ? 'fa-minus' : 'fa-plus'}`} aria-hidden="true"></i>
+                  </button>
                   
                   <div className="monument-link">
                     <span className="link-text">

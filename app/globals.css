@@ -6,14 +6,43 @@
 }
 
 html,
-body {
+body,
+#__next {
   margin: 0;
   padding: 0;
   width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.container {
+  width: min(100%, 1200px);
+  margin: 0 auto;
+  padding-inline: 1rem;
 }
 
 main {
   padding-top: 78px;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 /* Header */
@@ -76,7 +105,17 @@ main {
   }
 }
 
-/* --- Bouton Hamburger --- */
+@media (max-width: 768px) {
+  .header {
+    padding: 18px 20px;
+  }
+
+  .header-container {
+    padding: 0 16px;
+  }
+}
+
+/* --- Bouton Hamburger --- --- */
 .hamburger-button {
   display: block;
   background: none;
@@ -767,6 +806,111 @@ main {
   color: #ccc;
   min-height: 75px;
   margin-bottom: 25px;
+}
+
+.card-description,
+.mission p,
+.vision p,
+.Histoire p,
+.monument-content p,
+.value-item p,
+.team-member p,
+.cta p,
+.hero p,
+.section-subtitle,
+.hero-subtitle {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+.monument-description {
+  position: relative;
+  overflow: hidden;
+  transition: max-height 0.45s ease, opacity 0.35s ease;
+}
+
+.collapsed-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-height: 6.5rem;
+}
+
+.expanded-description {
+  max-height: 22rem;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+  scroll-behavior: smooth;
+}
+
+.expanded-description::-webkit-scrollbar {
+  width: 8px;
+}
+
+.expanded-description::-webkit-scrollbar-thumb {
+  background: rgba(140, 140, 140, 0.35);
+  border-radius: 999px;
+}
+
+.expanded-description::-webkit-scrollbar {
+  width: 8px;
+}
+
+.expanded-description::-webkit-scrollbar-thumb {
+  background: rgba(140, 140, 140, 0.4);
+  border-radius: 8px;
+}
+
+.motivation-text.collapsed {
+  max-height: 12rem;
+  overflow: hidden;
+}
+
+.motivation-text.expanded {
+  max-height: none;
+}
+
+.text-toggle-button {
+  margin-top: 0.75rem;
+  align-self: center;
+  background: rgba(139, 0, 0, 0.06);
+  border: 1px solid rgba(139, 0, 0, 0.18);
+  color: #8B0000;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.95rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+.text-toggle-button:hover {
+  background: rgba(139, 0, 0, 0.12);
+  transform: translateY(-1px);
+  border-color: rgba(139, 0, 0, 0.35);
+}
+
+.text-toggle-button i {
+  font-size: 1rem;
+}
+
+.icon-toggle {
+  padding: 0;
+}
+
+.monument-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.monument-content .monument-link {
+  margin-top: 1rem;
 }
 
 /* --- Bouton "LEARN MORE" --- */
@@ -2212,40 +2356,64 @@ main {
 }
 
 .mission-vision {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 2rem;
   margin-bottom: 4rem;
 }
 
 .mission,
 .vision {
-  flex: 1;
-  background-color: white;
+  background: linear-gradient(180deg, #ffffff 0%, #f5efe7 100%);
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  border-radius: 24px;
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.08);
   text-align: center;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .mission:hover,
 .vision:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 26px 55px rgba(0, 0, 0, 0.12);
 }
 
 .mission h3,
 .vision h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: 1.7rem;
+  margin-bottom: 0.75rem;
   color: #8B0000;
 }
 
 .mission-icon,
 .vision-icon {
-  font-size: 2.5rem;
+  font-size: 3rem;
   color: #D4AF37;
   margin-bottom: 1rem;
+}
+
+.mission .box-description,
+.vision .box-description {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.mission .box-description p,
+.vision .box-description p {
+  padding: 0.75rem 1rem;
+  background: rgba(212, 175, 55, 0.05);
+  border-radius: 16px;
+  border: 1px solid rgba(212, 175, 55, 0.15);
+}
+
+.mission .text-toggle-button,
+.vision .text-toggle-button {
+  margin-top: auto;
 }
 
 /* Values Section */
@@ -2984,50 +3152,57 @@ padding: 0 1rem;
 
 .monuments-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 3rem;
+  grid-template-columns: 1fr;
+  gap: 2rem;
   margin-top: 3rem;
 }
 
 .monument-card {
-  background: white;
-  border-radius: 12px;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(246,240,229,0.98));
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  border: 1px solid #eee;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 .monument-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  transform: translateY(-6px);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.16);
 }
 
 .monument-image-container {
   position: relative;
-  height: 250px;
+  height: 320px;
   overflow: hidden;
 }
 
 .monument-image {
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, #8B0000, #D4AF37);
+  background: linear-gradient(135deg, rgba(139,0,0,0.95), rgba(212,175,55,0.95));
 }
-.monument-image img{
+
+.monument-image img {
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  display: block;
 }
+
 .image-placeholder {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 4rem;
+  font-size: 4.5rem;
   color: white;
-  font-weight: bold;
-  opacity: 0.7;
+  font-weight: 900;
+  opacity: 0.85;
 }
 
 .monument-region {
@@ -3055,31 +3230,35 @@ padding: 0 1rem;
 }
 
 .monument-content {
-  padding: 1.8rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .monument-content h3 {
-  font-size: 1.4rem;
-  color: #2C1810;
-  margin-bottom: 1rem;
-  line-height: 1.3;
+  font-size: 1.7rem;
+  color: #8B0000;
+  margin-bottom: 0;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
 }
 
 .monument-content p {
-  color: #555;
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
+  color: #4d4d4d;
+  line-height: 1.8;
+  font-size: 1rem;
+  margin-bottom: 0;
 }
 
 .monument-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 0;
-  border-top: 1px solid #eee;
+  padding: 1rem 0 0;
+  border-top: 1px solid rgba(139, 0, 0, 0.08);
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.25s ease;
 }
 
 .monument-link:hover {
