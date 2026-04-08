@@ -2486,13 +2486,13 @@ main {
   height: 250px;
   background-size: cover;
   background-position: center;
-  background-image: url('/assets/images/background-ar-instruction.jpg');
+  background-image: url('/assets/images/photo-wally.jpeg');
 }
 .member-img {
   height: 250px;
   background-size: cover;
   background-position: center;
-  background-image: url('/assets/images/bouteille-ar.jpg');
+  background-image: url('/assets/images/photo-jovan.jpeg');
 }
 .member-info {
   padding: 1.5rem;
