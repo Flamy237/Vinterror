@@ -74,7 +74,7 @@ const PageTransitionLoader = () => {
               <div className={styles.dialCore}>
                 <span className={styles.dialState}>LOADING</span>
                 <span className={styles.dialValue}>{percent}%</span>
-                <span className={styles.dialLabel}>AR ONLINE</span>
+                <span className={styles.dialLabel}>AR SITE</span>
               </div>
             </div>
           </div>
@@ -96,7 +96,7 @@ const PageTransitionLoader = () => {
 
             <div className={styles.progressFooter}>
               <span className={styles.footerValue}>{percent}%</span>
-              <span className={styles.footerText}>Chargement du module AR</span>
+              <span className={styles.footerText}>Chargement des modules du site</span>
             </div>
           </div>
         </div>
