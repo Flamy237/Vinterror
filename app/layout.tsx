@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Script from 'next/script';
 import { Geist, Geist_Mono } from "next/font/google";
 import { Oswald } from 'next/font/google';
 import "./globals.css";
+import PageTransitionLoader from "./components/PageTransitionLoader";
 
-const oswald = Oswald({ 
+const oswald = Oswald({
   weight: ['700'],
   subsets: ['latin'],
   display: 'swap',
@@ -36,6 +36,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <PageTransitionLoader />
         {children}
       </body>
     </html>

@@ -22,7 +22,7 @@ const GangSection = () => {
         </p>
         
         {/* Bouton */}
-        <Link href="/gang-story" className="gang-button">
+        <Link href="/hero" className="gang-button">
           Lisez leur histoire
         </Link>
         

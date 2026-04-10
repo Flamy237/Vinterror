@@ -1,0 +1,378 @@
+.pageTransitionLoader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: radial-gradient(circle at center, rgba(15, 14, 15, 0.95) 0%, rgba(5, 5, 5, 0.98) 100%);
+  backdrop-filter: blur(8px);
+}
+
+.loaderCard {
+  width: min(800px, 100%);
+  background: rgba(8, 8, 8, 0.9);
+  border: 1px solid rgba(196, 167, 94, 0.3);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow:
+    0 0 60px rgba(196, 167, 94, 0.1),
+    inset 0 0 60px rgba(196, 167, 94, 0.05);
+  position: relative;
+}
+
+.loaderCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(45deg,
+    rgba(196, 167, 94, 0.3),
+    rgba(196, 167, 94, 0.1),
+    rgba(196, 167, 94, 0.3)
+  );
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+}
+
+.loaderGrid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 32px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.dialContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.dialRing {
+  width: 240px;
+  height: 240px;
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dialRing::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px dashed rgba(196, 167, 94, 0.3);
+  animation: rotate 4s linear infinite;
+}
+
+.dialRing::after {
+  content: '';
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 167, 94, 0.2);
+  box-shadow: 0 0 20px rgba(196, 167, 94, 0.1);
+}
+
+.dialProgress {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    #c4a75e 0deg,
+    rgba(196, 167, 94, 0.3) 0deg
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 2px),
+    black calc(100% - 2px)
+  );
+  transition: all 0.3s ease;
+}
+
+.dialCore {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(196, 167, 94, 0.1) 0%,
+    rgba(15, 14, 15, 0.95) 50%,
+    rgba(5, 5, 5, 0.98) 100%
+  );
+  border: 1px solid rgba(196, 167, 94, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  box-shadow:
+    inset 0 0 30px rgba(196, 167, 94, 0.1),
+    0 0 30px rgba(196, 167, 94, 0.05);
+}
+
+.dialCore::before {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 167, 94, 0.1);
+}
+
+.dialState {
+  color: #c4a75e;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.dialValue {
+  color: #f8f2d2;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 20px rgba(196, 167, 94, 0.3);
+  margin-bottom: 4px;
+}
+
+.dialLabel {
+  color: #c4a75e;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.progressPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  background: rgba(15, 14, 15, 0.8);
+  border: 1px solid rgba(196, 167, 94, 0.2);
+  border-radius: 12px;
+  position: relative;
+}
+
+.progressPanel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(196, 167, 94, 0.4) 20%,
+    rgba(196, 167, 94, 0.4) 80%,
+    transparent 100%
+  );
+}
+
+.progressPanel::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(196, 167, 94, 0.2) 20%,
+    rgba(196, 167, 94, 0.2) 80%,
+    transparent 100%
+  );
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.progressTag {
+  color: #c4a75e;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.progressSource {
+  color: #d4c381;
+  font-size: 0.7rem;
+  opacity: 0.8;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.progressTrack {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  gap: 6px;
+  padding: 16px 0;
+  position: relative;
+}
+
+.progressTrack::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg,
+    rgba(196, 167, 94, 0.05) 0%,
+    rgba(196, 167, 94, 0.1) 50%,
+    rgba(196, 167, 94, 0.05) 100%
+  );
+  border-radius: 4px;
+}
+
+.segment {
+  width: 100%;
+  height: 24px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(196, 167, 94, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.segment::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: 1px;
+  background: rgba(15, 14, 15, 0.9);
+}
+
+.segmentActive {
+  background: linear-gradient(180deg,
+    rgba(196, 167, 94, 0.8) 0%,
+    #c4a75e 50%,
+    rgba(196, 167, 94, 0.8) 100%
+  );
+  border-color: rgba(196, 167, 94, 0.4);
+  box-shadow:
+    0 0 8px rgba(196, 167, 94, 0.3),
+    inset 0 0 4px rgba(196, 167, 94, 0.2);
+}
+
+.segmentActive::before {
+  background: linear-gradient(180deg,
+    rgba(248, 242, 210, 0.9) 0%,
+    rgba(196, 167, 94, 0.8) 100%
+  );
+}
+
+.progressFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.footerValue {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f8f2d2;
+  text-shadow: 0 0 10px rgba(196, 167, 94, 0.2);
+}
+
+.footerText {
+  color: #c4a75e;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .loaderGrid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .dialContainer {
+    order: -1;
+  }
+
+  .dialRing {
+    width: 200px;
+    height: 200px;
+  }
+
+  .dialCore {
+    width: 140px;
+    height: 140px;
+  }
+
+  .dialValue {
+    font-size: 2.5rem;
+  }
+
+  .progressTrack {
+    grid-template-columns: repeat(16, 1fr);
+    gap: 4px;
+  }
+
+  .segment {
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .loaderCard {
+    padding: 20px;
+  }
+
+  .loaderGrid {
+    gap: 20px;
+  }
+
+  .dialRing {
+    width: 160px;
+    height: 160px;
+  }
+
+  .dialCore {
+    width: 120px;
+    height: 120px;
+  }
+
+  .dialValue {
+    font-size: 2rem;
+  }
+
+  .progressTrack {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 3px;
+  }
+
+  .segment {
+    height: 16px;
+  }
+}
