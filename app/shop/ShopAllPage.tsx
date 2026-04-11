@@ -137,12 +137,12 @@ const ShopAllPage = () => {
                         <div className="insider-box">
                             {/* Image de fond (a remplacer par notre model 3D) */}
                             <img src="/images/insider-bg.jpg" alt="Devenir un Partenaire VinTerror" className="insider-bg-image" />                            <div className="insider-content">
-                                <h3 className="insider-title">DEVENEZ UN<br/>DE NOS PARTENAIRES</h3>
+                                <h3 className="insider-title">DECOUVREZ<br/>NOTRE BOUTEILLE EN 3D</h3>
                                 <p className="insider-text">
-                                    Joignez-vous et gagnez en visibilité tout en profitant d'une expérience à la pointe de la technologie.
+                                    Plongez dans l'univers de VinTerror en explorant notre bouteille de vin en 3D. Découvrez chaque détail, chaque étiquette, et laissez-vous surprendre par une expérience immersive unique.
                                 </p>
-                                <a href="/insiders" className="insider-button">
-                                    EN SAVOIR PLUS
+                                <a href="/bottle" className="insider-button">
+                                    PLONGEZ DANS L'EXPERIENCE
                                 </a>
                             </div>
                         </div>
